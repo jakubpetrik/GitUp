@@ -191,6 +191,10 @@ static NSColor* _patternColor = nil;
   return _graphView.selectedCommit;
 }
 
+- (NSData *)graphData {
+  return [_graphView dataWithPDFInsideRect:_graphView.bounds];
+}
+
 - (BOOL)selectCommit:(GCCommit*)commit {
   GINode* node = [self nodeForCommit:commit];
   if (node) {

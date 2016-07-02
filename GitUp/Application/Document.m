@@ -2088,4 +2088,27 @@ static NSString* _StringFromRepositoryState(GCRepositoryState state) {
   [_repository setUserInfo:(_indexDiffsButton.state ? @(YES) : @(NO)) forKey:kRepositoryUserInfoKey_IndexDiffs];
 }
 
+- (IBAction)exportMap:(id)sender {
+  NSSavePanel *panel = [NSSavePanel savePanel];
+
+  [panel beginSheetModalForWindow:_windowController.window completionHandler:^(NSInteger result) {
+    if (result == NSFileHandlingPanelCancelButton) {
+      return;
+    }
+
+    NSURL *fileURL = [panel URL];
+    if (![[[fileURL pathExtension] lowercaseString] isEqualToString:@"pdf"]) {
+      fileURL = [fileURL URLByAppendingPathExtension:@"pdf"];
+    }
+    
+    NSError *writeError = nil;
+    [_mapViewController.graphData writeToURL:fileURL options:NSDataWritingAtomic error:&writeError];
+    if (writeError) {
+      NSAlert *alert = [NSAlert alertWithError:writeError];
+      alert.type = kGIAlertType_Caution;
+      [alert runModal];
+    }
+  }];
+}
+
 @end

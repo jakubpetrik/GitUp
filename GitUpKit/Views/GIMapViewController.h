@@ -35,6 +35,7 @@
 @property(nonatomic, readonly) GCHistoryCommit* selectedCommit;  // Nil if no commit is selected
 @property(nonatomic, strong) GCHistory* previewHistory;
 @property(nonatomic) BOOL forceShowAllTips;
+@property(nonatomic, readonly) NSData *graphData;
 - (BOOL)selectCommit:(GCCommit*)commit;  // Also scrolls if needed to ensure commit is visible - Returns YES if commit was selected
 - (GINode*)nodeForCommit:(GCCommit*)commit;
 - (NSPoint)positionInViewForCommit:(GCCommit*)commit;
